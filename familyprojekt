@@ -53,9 +53,29 @@ public class Main {
         }
 
     }
-
+    public class FileHandler {
+           public void writeObjectToFile(Object obj, String fileName) {
+             try (FileOutputStream fileOut = new FileOutputStream(fileName);
+             ObjectOutputStream objectOut = new ObjectOutputStream(fileOut)) {
+            objectOut.writeObject(obj);
+            System.out.println("Object has been written to the file");
+            } catch (IOException e) {
+            System.out.println("Error writing object to file: " + e.getMessage());
+            }
+    }
+    public Object readObjectFromFile(String fileName) {
+        try (FileInputStream fileIn = new FileInputStream(fileName);
+             ObjectInputStream objectIn = new ObjectInputStream(fileIn)) {
+            Object obj = objectIn.readObject();
+            System.out.println("Object has been read from the file");
+            return obj;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error reading object from file: " + e.getMessage());
+            return null;
+            }
+        }
+    }
 }
-
 
 
 
