@@ -1,0 +1,67 @@
+public class Person {
+    private String name;
+    private String dateOfBirth;
+    private List<Person> children;
+    public Person(String name, String dateOfBirth) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.children = new ArrayList<>();
+    }
+    public void addChild(Person child) {
+        children.add(child);
+    }
+    public List<Person> getChildren() {
+        return children;
+    }
+}
+public class FamilyTree {
+    private List<Person> people;
+    public FamilyTree() {
+        this.people = new ArrayList<>();
+    }
+    public void addPerson(Person person) {
+        people.add(person);
+    }
+    public List<Person> getAllChildren(String personName) {
+        for (Person person : people) {
+            if (person.getName().equals(personName)) {
+                return person.getChildren();
+            }
+        }
+        return new ArrayList<>();
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Person father = new Person("Father", "01/01/1980");
+        Person mother = new Person("Mother", "01/01/1982");
+        Person child1 = new Person("Child1", "01/01/2000");
+        Person child2 = new Person("Child2", "01/01/2005");
+
+        father.addChild(child1);
+        father.addChild(child2);
+        mother.addChild(child1);
+        FamilyTree familyTree = new FamilyTree();
+        familyTree.addPerson(father);
+        familyTree.addPerson(mother);
+        familyTree.addPerson(child1);
+        familyTree.addPerson(child2);
+        List<Person> children = familyTree.getAllChildren("Father");
+        for (Person child : children) {
+            System.out.println(child.getName());
+
+        }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
