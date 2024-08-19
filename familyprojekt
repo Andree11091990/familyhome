@@ -76,9 +76,54 @@ public class Main {
         }
     }
 }
+public class Node {
+    private Person person;
+    private List<Node> children;
+    public Node(Person person) {
+        this.person = person;
+        this.children = new ArrayList<>();
 
+    }
+}
+public class Tree implements Iterable<Person> {
+    private Node root;
+    public Tree(Node root) {
+        this.root = root;
+    }
+    @Override
+    public Iterator<Person> iterator() {
+        return new TreeIterator(root);
+    }
+    private class TreeIterator implements Iterator<Person> {
+        private Queue<Node> queue;
+        public TreeIterator(Node root) {
+            queue = new LinkedList<>();
+            queue.add(root);
+        }
+        @Override
+        public boolean hasNext() {
+            return !queue.isEmpty();
+        }
+        @Override
+        public Person next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Node current = queue.remove();
+            for (Node child : current.getChildren()) {
+                queue.add(child);
+            }
+            return current.getPerson();
+        }
+    }
+}
+public void sortByFirstName() {
+    List<Person> sortedList = StreamSupport.stream(this.spliterator(), false)
+            .sorted(Comparator.comparing(Person::getFirstName))
+            .collect(Collectors.toList());
+    sortedList.forEach(person -> System.out.println(person.getFirstName()));
 
-
+}
 
 
 
